@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BUYR</string>
+    <string name="lists_label">Lists</string>
+    <string name="watchlist_label">Watchlist</string>
+    <string name="options_label">Options</string>
+    <string name="sign_in_label">Sign In</string>
+    <string name="email_placeholder">Email</string>
+    <string name="password_placeholder">Password</string>
+    <string name="forgot_pwd_placeholder">Forgot Password?</string>
+    <string name="register_placeholder">Register</string>
+    <string name="confirm_pwd_placeholder">Confirm Password</string>
+    <string name="terms_label">Terms and Conditions</string>
+</resources>
