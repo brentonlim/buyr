@@ -10,4 +10,5 @@
     <string name="register_placeholder">Register</string>
     <string name="confirm_pwd_placeholder">Confirm Password</string>
     <string name="terms_label">Terms and Conditions</string>
+    <string name="new_list_title">New List</string>
 </resources>
