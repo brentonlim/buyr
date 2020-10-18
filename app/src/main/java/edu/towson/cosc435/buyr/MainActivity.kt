@@ -2,10 +2,29 @@ package edu.towson.cosc435.buyr
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import edu.towson.cosc435.buyr.lists.ListsFragment
+import edu.towson.cosc435.buyr.options.OptionsFragment
+import edu.towson.cosc435.buyr.watchlist.WatchlistFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setUpTabs()
+    }
+
+    private fun setUpTabs() {
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(ListsFragment(), getString(R.string.lists_label))
+        adapter.addFragment(WatchlistFragment(), getString(R.string.watchlist_label))
+        adapter.addFragment(OptionsFragment(), getString(R.string.options_label))
+        viewPager.adapter = adapter
+        tabs.setupWithViewPager(viewPager)
+
+        tabs.getTabAt(0)!!.setIcon(R.drawable.ic_baseline_list_24)
+        tabs.getTabAt(1)!!.setIcon(R.drawable.ic_baseline_remove_red_eye_24)
+        tabs.getTabAt(2)!!.setIcon(R.drawable.ic_baseline_settings_24)
     }
 }

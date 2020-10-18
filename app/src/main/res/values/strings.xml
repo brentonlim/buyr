@@ -11,4 +11,6 @@
     <string name="confirm_pwd_placeholder">Confirm Password</string>
     <string name="terms_label">Terms and Conditions</string>
     <string name="new_list_title">New List</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
