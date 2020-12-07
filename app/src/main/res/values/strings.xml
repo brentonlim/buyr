@@ -28,4 +28,12 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="skip_register">Skip</string>
+    <string name="save_new_list_btn">Save</string>
+    <string name="search_item_btn">Find</string>
+    <string name="list_title">Title</string>
+    <string name="list_desc">Description</string>
+    <string name="new_item_title">New Item</string>
+    <string name="new_item_search">Search for an item...</string>
+
+
 </resources>
