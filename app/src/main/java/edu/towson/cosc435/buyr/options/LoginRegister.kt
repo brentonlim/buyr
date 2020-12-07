@@ -3,6 +3,7 @@ package edu.towson.cosc435.buyr.options
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import edu.towson.cosc435.buyr.MainActivity
@@ -30,10 +31,12 @@ class LoginRegister : AppCompatActivity() {
         val login = findViewById<Button>(R.id.login_btn)
         login.setOnClickListener { login() }
 
+        Log.d("hello", "hello")
 
     }
 
-    private lateinit var sessionManagement:SessionManager
+//    private lateinit var sessionManagement:SessionManager(this)
+      private val sessionManagement = SessionManager(this)
 
     override fun onStart() {
         super.onStart()
@@ -58,7 +61,6 @@ class LoginRegister : AppCompatActivity() {
         //todo: accept user input
         val user = User(1,"blim@mail.com","1234")
 
-        sessionManagement.sessionManager(this)
         sessionManagement.saveSession(user)
 
         //proceed to app's MainActivity here [LOGGED IN]:

@@ -3,15 +3,9 @@ package edu.towson.cosc435.buyr.options
 import android.content.Context
 import android.content.SharedPreferences
 
-class SessionManager {
-    private lateinit var sharedPreferences:SharedPreferences
-    private lateinit var editor:SharedPreferences.Editor
-
-    fun sessionManager(ctx: Context){
-        sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-
-        editor = sharedPreferences.edit()
-    }
+class SessionManager (ctx: Context){
+    var sharedPreferences:SharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+    var editor:SharedPreferences.Editor = sharedPreferences.edit()
 
     companion object{
         val SHARED_PREF_NAME = "session"
