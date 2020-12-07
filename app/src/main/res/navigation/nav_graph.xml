@@ -15,6 +15,9 @@
             app:destination="@id/addListFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_listsFragment_to_listItemsFragment"
+            app:destination="@id/listItemsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addListFragment"
@@ -62,5 +65,26 @@
             android:id="@+id/action_viewPagerFragment_to_listsFragment"
             app:destination="@id/listsFragment"
             app:popUpTo="@id/viewPagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listItemsFragment"
+        android:name="edu.towson.cosc435.buyr.lists.ListItemsFragment"
+        android:label="fragment_list_items"
+        tools:layout="@layout/fragment_list_items" >
+        <action
+            android:id="@+id/action_listItemsFragment_to_listsFragment"
+            app:destination="@id/listsFragment" />
+        <action
+            android:id="@+id/action_listItemsFragment_to_addItemFragment"
+            app:destination="@id/addItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="edu.towson.cosc435.buyr.lists.AddItemFragment"
+        android:label="fragment_add_item"
+        tools:layout="@layout/fragment_add_item" >
+        <action
+            android:id="@+id/action_addItemFragment_to_listItemsFragment"
+            app:destination="@id/listItemsFragment" />
     </fragment>
 </navigation>

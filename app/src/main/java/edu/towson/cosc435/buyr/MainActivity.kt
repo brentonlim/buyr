@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity(), IListController {
         scope.launch(Dispatchers.Default) {
             val existingLists = listsModel.getLists()
             existingLists.forEach { list ->
-                if(existingLists.firstOrNull { s -> s.listID == list.listID } == null) {
+                if(existingLists.firstOrNull { l -> l.listID == list.listID } == null) {
                     listsModel.addList(list)
                 }
                 withContext(Dispatchers.Main) {
-                    recyclerView.adapter?.notifyDataSetChanged()
+                    recyclerView?.adapter?.notifyDataSetChanged()
                 }
             }
         }

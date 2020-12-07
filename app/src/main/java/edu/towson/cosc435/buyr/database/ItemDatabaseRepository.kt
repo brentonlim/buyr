@@ -10,7 +10,7 @@ import kotlinx.coroutines.sync.withLock
 
 class ItemDatabaseRepository(ctx: Context) : IItemRepository {
     private val items: MutableList<Item> = mutableListOf()
-    private val Idb: ItemDatabase = Room.databaseBuilder(
+    private val db: ItemDatabase = Room.databaseBuilder(
         ctx,
         ItemDatabase::class.java,
         "item.db"
@@ -36,19 +36,19 @@ class ItemDatabaseRepository(ctx: Context) : IItemRepository {
     override suspend fun deleteItem(idx: Int) {
         delay(2000)
         val item = items[idx]
-        Idb.itemDao().deleteItem(item)
+        db.itemDao().deleteItem(item)
         clearAndFillItems()
     }
 
     override suspend fun addItem(item: Item) {
-        Idb.itemDao().addItem(item)
+        db.itemDao().addItem(item)
         clearAndFillItems()
     }
 
     private suspend fun clearAndFillItems() {
         ListDatabaseRepository.mutex.withLock {
             items.clear()
-            Idb.itemDao().getAllItems()?.let { items.addAll(it) }
+            db.itemDao().getAllItems()?.let { items.addAll(it) }
         }
     }
 
