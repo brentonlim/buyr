@@ -1,8 +1,5 @@
 package edu.towson.cosc435.buyr.network
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.util.Log
 import com.google.gson.GsonBuilder
 import edu.towson.cosc435.buyr.interfaces.IProductAPI
@@ -40,8 +37,6 @@ class ProductAPI : IProductAPI {
                 val gson = GsonBuilder().create()
                 Log.i(TAG, productInfo)
                 val products = gson.fromJson<List<Item>>(productInfo, Item::class.java)
-
-//                Log.i(TAG, products?.get(0).toString())
                 products
             } else {
                 Log.i(TAG, "Failed to retrieve product information")
@@ -54,6 +49,7 @@ class ProductAPI : IProductAPI {
 //        val imageBytes = Base64.decode(imgUrl, 0)
 //        val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 //    }
+
     companion object {
         const val TAG = "PRODUCT_API"
     }

@@ -8,4 +8,8 @@ class NewItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_item)
     }
+
+    companion object {
+        const val ITEM_KEY = "item_key"
+    }
 }

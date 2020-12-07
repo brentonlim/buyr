@@ -1,55 +1,32 @@
 package edu.towson.cosc435.buyr.lists
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.towson.cosc435.buyr.R
-import kotlinx.android.synthetic.main.list_item_view.view.*
+import edu.towson.cosc435.buyr.interfaces.IListController
 
-class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListAdapter(private val controller: IListController): RecyclerView.Adapter<ListViewHolder>() {
 
-    private var list: List<ListItem> = ArrayList()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.list_item_view, parent, false)
+        val holder = ListViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ListViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_view, parent, false)
-        )
+        //Add deleteListBtn listener
+        //Add editList Listener
+
+        return holder
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return controller.getListsCount()
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is ListViewHolder -> {
-                //BINDING the data to the recyclerview
-                holder.bind(list.get(position))
-            }
-        }
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        val list = controller.getList(position)
+        holder.listNameTv.text = list.listName
+        holder.listDescriptionTv.text = list.listDescription
+        holder.listDateTv.text = list.creationDate.toString()
     }
-
-    fun showListView(listView: List<ListItem>){
-        list = listView
-    }
-
-    //view Holder class to DISPLAY OUR DATA
-    class ListViewHolder constructor(listView: View) : RecyclerView.ViewHolder(listView) {
-        //here, link the data to the list_item_view//
-        val listTitle = listView.list_title
-        val listDesc = listView.list_desc
-        val listDate = listView.list_date
-
-        //here, binding the above vals to the view holder
-        //taking the LIST MODEL PARAMS
-        fun bind(listItem: ListItem) {
-            listTitle.text = listItem.title
-            listDesc.text = listItem.desc
-            listDate.text = listItem.dateCreated
-        }
-
-    }
-
 }

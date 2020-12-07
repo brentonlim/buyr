@@ -16,7 +16,6 @@
     <string name="confirm_pwd_placeholder">Confirm Password</string>
     <string name="terms_label">Terms and Conditions</string>
     <string name="new_list_title">New List</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -34,6 +33,6 @@
     <string name="list_desc">Description</string>
     <string name="new_item_title">New Item</string>
     <string name="new_item_search">Search for an item...</string>
-
-
+    <string name="edit_list_btn_text">Edit List</string>
+    <string name="addlist_error_msg_name">List name is required</string>
 </resources>

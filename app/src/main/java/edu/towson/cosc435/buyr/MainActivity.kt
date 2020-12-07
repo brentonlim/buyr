@@ -1,34 +1,105 @@
 package edu.towson.cosc435.buyr
 
-import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import edu.towson.cosc435.buyr.lists.ListsFragment
-import edu.towson.cosc435.buyr.options.OptionsFragment
-import edu.towson.cosc435.buyr.watchlist.WatchlistFragment
+import android.widget.Toast
+import edu.towson.cosc435.buyr.database.ListDatabaseRepository
+import edu.towson.cosc435.buyr.interfaces.IListController
+import edu.towson.cosc435.buyr.interfaces.IListsModel
+import edu.towson.cosc435.buyr.model.List
+import edu.towson.cosc435.buyr.model.ListsModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_lists.*
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.*
 
+class MainActivity : AppCompatActivity(), IListController {
+    private lateinit var listsModel: IListsModel
+    private var editingListIdx = -1
+    private val scope = CoroutineScope(Dispatchers.Main)
 
-class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setUpTabs()
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val navController = findNavController(R.id.nav_host_fragment)
+        bottomNavigationView.setupWithNavController(navController)
 
+        listsModel = ListsModel(ListDatabaseRepository(applicationContext))
     }
 
-    private fun setUpTabs() {
-        val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(ListsFragment(), getString(R.string.lists_label))
-        adapter.addFragment(WatchlistFragment(), getString(R.string.watchlist_label))
-        adapter.addFragment(OptionsFragment(), getString(R.string.options_label))
-        viewPager.adapter = adapter
-        tabs.setupWithViewPager(viewPager)
+    override suspend fun deleteList(idx: Int) {
+        try {
+            withContext(Dispatchers.IO) {
+                listsModel.deleteList(idx)
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this@MainActivity, "Failed to delete list",
+                Toast.LENGTH_SHORT).show()
+            throw e
+        }
+    }
 
-        tabs.getTabAt(0)!!.setIcon(R.drawable.ic_baseline_list_24)
-        tabs.getTabAt(1)!!.setIcon(R.drawable.ic_baseline_remove_red_eye_24)
-        tabs.getTabAt(2)!!.setIcon(R.drawable.ic_baseline_settings_24)
+    override fun launchAddListScreen() {
+        editingListIdx = -1
+        listsModel.clearEdit()
+        findNavController(R.id.nav_host_fragment)
+            .navigate(R.id.action_listsFragment_to_addListFragment)
+    }
+
+    override fun getList(idx: Int): List {
+        return listsModel.getList(idx)
+    }
+
+    override suspend fun getLists(): kotlin.collections.List<List> {
+        return listsModel.getLists()
+    }
+
+    override fun getListsCount(): Int {
+        return listsModel.getListsCount()
+    }
+
+    override fun editList(idx: Int) {
+        editingListIdx = idx
+        findNavController(R.id.nav_host_fragment)
+            .navigate(R.id.action_listsFragment_to_addListFragment)
+    }
+
+    override suspend fun addNewList(list: List) {
+        try {
+            withContext(Dispatchers.IO) {
+                listsModel.addList(list)
+            }
+            editingListIdx = -1
+            listsModel.clearEdit()
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                findNavController(R.id.nav_host_fragment).popBackStack()
+            } else {
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this@MainActivity, "Failed to add list",
+                Toast.LENGTH_SHORT).show()
+            throw e
+        }
+    }
+
+    override fun getListForEdit(): List? {
+        if (editingListIdx < 0) return null
+        return listsModel.editList(editingListIdx)
+    }
+
+    override fun runAsync(blk: suspend () -> Unit) {
+        scope.launch { blk() }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        scope.cancel()
     }
 
 //    private val sessionManagement = SessionManager(this)
@@ -50,6 +121,4 @@ class MainActivity : AppCompatActivity() {
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 //        startActivity(intent)
 //    }
-
-
 }

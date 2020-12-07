@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listsFragment"
+        android:title="@string/lists_label"
+        android:icon="@drawable/ic_baseline_list_24"/>
+    <item
+        android:id="@+id/watchlistFragment"
+        android:title="@string/watchlist_label"
+        android:icon="@drawable/ic_baseline_remove_red_eye_24"/>
+    <item
+        android:id="@+id/optionsFragment"
+        android:title="@string/options_label"
+        android:icon="@drawable/ic_baseline_settings_24"/>
+</menu>

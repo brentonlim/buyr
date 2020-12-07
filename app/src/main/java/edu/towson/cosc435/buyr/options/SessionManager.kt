@@ -4,7 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SessionManager (ctx: Context){
-    var sharedPreferences:SharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+    var sharedPreferences:SharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,
+        Context.MODE_PRIVATE)
     var editor:SharedPreferences.Editor = sharedPreferences.edit()
 
     companion object{
