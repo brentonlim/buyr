@@ -26,13 +26,27 @@
         android:layout_marginTop="48dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_horizontal"
-        android:text="@string/sign_out_label"
-        android:textColor="#E91E63"
+        android:text="@string/sign_in_label"
+        android:textColor="#1EE928"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="@string/sign_in_label" />
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:text="@string/sign_in_label"
+        android:textColor="#1E62E9"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/account"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="@string/sign_out_label" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_out"
+        tools:text="@string/action_register" />
 
     <TextView
         android:id="@+id/account"
@@ -44,7 +58,7 @@
         android:text="@string/account_label"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_out" />
+        app:layout_constraintTop_toBottomOf="@+id/register" />
 
     <TextView
         android:id="@+id/preferred_label"

@@ -45,6 +45,7 @@ dependencies {
     implementation "com.github.adelnizamutdinov:kotlin-either:3.0.0"
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.room:room-testing:2.2.5'

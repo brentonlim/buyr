@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listsFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/listsFragment"
@@ -37,4 +37,30 @@
         android:name="edu.towson.cosc435.buyr.options.OptionsFragment"
         android:label="fragment_options"
         tools:layout="@layout/fragment_options" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="edu.towson.cosc435.buyr.splashscreen.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_listsFragment"
+            app:destination="@id/listsFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="edu.towson.cosc435.buyr.splashscreen.onboarding.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" >
+        <action
+            android:id="@+id/action_viewPagerFragment_to_listsFragment"
+            app:destination="@id/listsFragment"
+            app:popUpTo="@id/viewPagerFragment" />
+    </fragment>
 </navigation>
