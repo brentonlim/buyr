@@ -6,21 +6,18 @@ import androidx.room.Room
 import edu.towson.cosc435.buyr.interfaces.IItemRepository
 import edu.towson.cosc435.buyr.model.Item
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 class ItemDatabaseRepository(ctx: Context) : IItemRepository {
     private val items: MutableList<Item> = mutableListOf()
-    private val db: ItemDatabase = Room.databaseBuilder(
+    private val Idb: ItemDatabase = Room.databaseBuilder(
         ctx,
         ItemDatabase::class.java,
         "item.db"
     ).build()
-    companion object {
-        val mutex = Mutex()
-    }
 
-    override fun getCount(): Int {
+
+    override fun getItemCount(): Int {
         Log.d("ItemsAdapter", "SIZE: ${items.size}")
         return items.size
     }
@@ -29,8 +26,8 @@ class ItemDatabaseRepository(ctx: Context) : IItemRepository {
         return items[idx]
     }
 
-    override suspend fun getItems(): List<Item> {
-        if (getCount() == 0) {
+    override suspend fun getItems(): kotlin.collections.List<Item> {
+        if (getItemCount() == 0) {
             clearAndFillItems()
         }
         return items
@@ -39,23 +36,23 @@ class ItemDatabaseRepository(ctx: Context) : IItemRepository {
     override suspend fun deleteItem(idx: Int) {
         delay(2000)
         val item = items[idx]
-        db.itemDao().deleteItem(item)
+        Idb.itemDao().deleteItem(item)
         clearAndFillItems()
     }
 
     override suspend fun addItem(item: Item) {
-        db.itemDao().addItem(item)
+        Idb.itemDao().addItem(item)
         clearAndFillItems()
     }
 
     private suspend fun clearAndFillItems() {
-        mutex.withLock {
+        ListDatabaseRepository.mutex.withLock {
             items.clear()
-            db.itemDao().getAllItems()?.let { items.addAll(it) }
+            Idb.itemDao().getAllItems()?.let { items.addAll(it) }
         }
     }
 
-    override suspend fun refreshList() {
+    override suspend fun refreshItemList() {
         clearAndFillItems()
     }
 }

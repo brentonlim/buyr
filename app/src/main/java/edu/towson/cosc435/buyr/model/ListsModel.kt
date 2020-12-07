@@ -8,7 +8,7 @@ class ListsModel(private val listRepository: IListRepository): IListsModel {
     private var editingIdx = -1
 
     override fun getListsCount(): Int {
-        return listRepository.getCount()
+        return listRepository.getListCount()
     }
 
     override suspend fun getLists(): kotlin.collections.List<List> {

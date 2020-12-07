@@ -14,10 +14,17 @@ import kotlinx.android.synthetic.main.fragment_lists.*
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import edu.towson.cosc435.buyr.interfaces.IItemController
+import edu.towson.cosc435.buyr.interfaces.IItemsModel
+import edu.towson.cosc435.buyr.model.Item
+import edu.towson.cosc435.buyr.model.ItemsModel
+import kotlinx.android.synthetic.main.fragment_list_items.*
 import kotlinx.coroutines.*
 
+//, IItemController
 class MainActivity : AppCompatActivity(), IListController {
     private lateinit var listsModel: IListsModel
+//    private lateinit var itemsModel: IItemsModel
     private var editingListIdx = -1
     private val scope = CoroutineScope(Dispatchers.Main)
 
@@ -30,17 +37,34 @@ class MainActivity : AppCompatActivity(), IListController {
         bottomNavigationView.setupWithNavController(navController)
 
         listsModel = ListsModel(ListDatabaseRepository(applicationContext))
+//        itemsModel = ItemsModel(ListDatabaseRepository(applicationContext))
+
+        scope.launch(Dispatchers.Default) {
+            val existingLists = listsModel.getLists()
+            existingLists.forEach { list ->
+                if(existingLists.firstOrNull { s -> s.listID == list.listID } == null) {
+                    listsModel.addList(list)
+                }
+                withContext(Dispatchers.Main) {
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     override suspend fun deleteList(idx: Int) {
-        try {
-            withContext(Dispatchers.IO) {
-                listsModel.deleteList(idx)
+        scope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    listsModel.deleteList(idx)
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@MainActivity, "Failed to delete list",
+                    Toast.LENGTH_SHORT
+                ).show()
+                throw e
             }
-        } catch (e: Exception) {
-            Toast.makeText(this@MainActivity, "Failed to delete list",
-                Toast.LENGTH_SHORT).show()
-            throw e
         }
     }
 
@@ -70,21 +94,25 @@ class MainActivity : AppCompatActivity(), IListController {
     }
 
     override suspend fun addNewList(list: List) {
-        try {
-            withContext(Dispatchers.IO) {
-                listsModel.addList(list)
+        scope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    listsModel.addList(list)
+                }
+                editingListIdx = -1
+                listsModel.clearEdit()
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    findNavController(R.id.nav_host_fragment).popBackStack()
+                } else {
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@MainActivity, "Failed to add list",
+                    Toast.LENGTH_SHORT
+                ).show()
+                throw e
             }
-            editingListIdx = -1
-            listsModel.clearEdit()
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                findNavController(R.id.nav_host_fragment).popBackStack()
-            } else {
-                recyclerView.adapter?.notifyDataSetChanged()
-            }
-        } catch (e: Exception) {
-            Toast.makeText(this@MainActivity, "Failed to add list",
-                Toast.LENGTH_SHORT).show()
-            throw e
         }
     }
 
@@ -93,9 +121,68 @@ class MainActivity : AppCompatActivity(), IListController {
         return listsModel.editList(editingListIdx)
     }
 
+    override fun launchListItemsScreen() {
+        findNavController(R.id.nav_host_fragment)
+            .navigate(R.id.action_listsFragment_to_listItemsFragment)
+    }
+
     override fun runAsync(blk: suspend () -> Unit) {
         scope.launch { blk() }
     }
+
+//    override suspend fun deleteItem(idx: Int) {
+//        scope.launch {
+//            try {
+//                withContext(Dispatchers.IO) {
+//                    itemsModel.deleteItem(idx)
+//                }
+//            } catch (e: Exception) {
+//                Toast.makeText(
+//                    this@MainActivity, "Failed to delete item",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                throw e
+//            }
+//        }
+//    }
+//
+//    override fun getItem(idx: Int): Item {
+//        return itemsModel.getItem(idx)
+//    }
+//
+//    override suspend fun getItems(): kotlin.collections.List<Item> {
+//        return itemsModel.getItems()
+//    }
+//
+//    override fun getItemsCount(): Int {
+//        return itemsModel.getItemsCount()
+//    }
+//
+//    override suspend fun addNewItem(item: Item) {
+//        scope.launch {
+//            try {
+//                withContext(Dispatchers.IO) {
+//                    itemsModel.addItem(item)
+//                }
+//                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//                    findNavController(R.id.nav_host_fragment).popBackStack()
+//                } else {
+//                    recyclerView_Item.adapter?.notifyDataSetChanged()
+//                }
+//            } catch (e: Exception) {
+//                Toast.makeText(
+//                    this@MainActivity, "Failed to add item",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                throw e
+//            }
+//        }
+//    }
+//
+//    override fun launchAddNewItemScreen() {
+//        findNavController(R.id.nav_host_fragment)
+//            .navigate(R.id.action_listItemsFragment_to_addItemFragment)
+//    }
 
     override fun onStop() {
         super.onStop()

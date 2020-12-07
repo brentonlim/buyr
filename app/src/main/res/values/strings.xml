@@ -32,7 +32,8 @@
     <string name="list_title">Title</string>
     <string name="list_desc">Description</string>
     <string name="new_item_title">New Item</string>
-    <string name="new_item_search">Search for an item...</string>
+    <string name="new_item_search">Search for an item…</string>
     <string name="edit_list_btn_text">Edit List</string>
     <string name="addlist_error_msg_name">List name is required</string>
+    <string name="additem_error_msg_name">Item name is required</string>
 </resources>

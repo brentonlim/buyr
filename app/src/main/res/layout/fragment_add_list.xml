@@ -7,7 +7,7 @@
     tools:context=".lists.AddListFragment">
 
         <TextView
-            android:id="@+id/addListTitle"
+            android:id="@+id/addItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="148dp"
@@ -25,7 +25,7 @@
             android:layout_marginStart="24dp"
             android:text="@string/list_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addListTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/addItemTitle" />
 
         <EditText
             android:id="@+id/inputListName"
@@ -71,10 +71,10 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/saveListBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/addItemBtn" />
 
         <Button
-            android:id="@+id/saveListBtn"
+            android:id="@+id/addItemBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

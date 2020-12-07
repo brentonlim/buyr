@@ -11,10 +11,10 @@ import either.Either
 import edu.towson.cosc435.buyr.R
 import edu.towson.cosc435.buyr.interfaces.IListController
 import edu.towson.cosc435.buyr.model.List
-import kotlinx.android.synthetic.main.activity_new_list.addListTitle
+import kotlinx.android.synthetic.main.activity_new_list.addItemTitle
 import kotlinx.android.synthetic.main.activity_new_list.inputListDesc
 import kotlinx.android.synthetic.main.activity_new_list.inputListName
-import kotlinx.android.synthetic.main.activity_new_list.saveListBtn
+import kotlinx.android.synthetic.main.activity_new_list.addItemBtn
 import kotlinx.android.synthetic.main.fragment_add_list.*
 import java.util.*
 
@@ -23,7 +23,8 @@ class AddListFragment : Fragment() {
     private var editingListId: UUID? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -46,8 +47,8 @@ class AddListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        saveListBtn.setOnClickListener {
-            when(val list = getSongFromView()) {
+        addItemBtn.setOnClickListener {
+            when(val list = getListFromView()) {
                 is Either.Left -> {
                     errorMsg.text = list.value
                     errorMsg.visibility = View.VISIBLE
@@ -66,7 +67,7 @@ class AddListFragment : Fragment() {
         }
     }
 
-    private fun getSongFromView(): Either<String, List> {
+    private fun getListFromView(): Either<String, List> {
         val name = inputListName.editableText.toString()
         val desc = inputListDesc.editableText.toString()
 
@@ -88,7 +89,7 @@ class AddListFragment : Fragment() {
         )
     }
 
-    fun populateList() {
+    private fun populateList() {
         val list = listController.getListForEdit()
         inputListName.editableText.clear()
         inputListDesc.editableText.clear()
@@ -96,13 +97,13 @@ class AddListFragment : Fragment() {
             editingListId = list.listID
             inputListName.editableText.append(list.listName)
             inputListDesc.editableText.append(list.listDescription)
-            saveListBtn.text = resources.getText(R.string.edit_list_btn_text)
+            addItemBtn.text = resources.getText(R.string.edit_list_btn_text)
             if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                addListTitle.text = resources.getText(R.string.edit_list_btn_text)
+                addItemTitle.text = resources.getText(R.string.edit_list_btn_text)
         } else {
-            saveListBtn.text = resources.getText(R.string.save_new_list_btn)
+            addItemBtn.text = resources.getText(R.string.save_new_list_btn)
             if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                addListTitle.text = resources.getText(R.string.new_list_title)
+                addItemTitle.text = resources.getText(R.string.new_list_title)
         }
     }
 }

@@ -11,6 +11,7 @@ interface IListController {
     fun editList(idx: Int)
     suspend fun addNewList(list: List)
     fun getListForEdit(): List?
+    fun launchListItemsScreen()
     // run a block of code asynchronously
     fun runAsync(blk: suspend () -> Unit)
 }

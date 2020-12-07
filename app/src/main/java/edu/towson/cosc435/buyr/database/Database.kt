@@ -26,7 +26,7 @@ interface ItemDao {
 
     @Delete suspend fun deleteItem(item: Item)
 
-    @Query("SELECT itemListID, itemName, itemLink, storeName, price FROM item")
+    @Query("SELECT itemListID, itemName, itemLink, storeNameOne, storePriceOne, storeNameTwo, storePriceTwo FROM item")
     suspend fun getAllItems(): kotlin.collections.List<Item>?
 }
 

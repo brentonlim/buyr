@@ -16,9 +16,11 @@ import com.google.gson.annotations.SerializedName
 
 data class Item (
     @PrimaryKey val itemListID: UUID,
-    @ColumnInfo(name = "itemName") @SerializedName("title") val itemName: String,
-    @ColumnInfo(name = "itemLink") @SerializedName("link") val itemLink: String,
-    @ColumnInfo(name = "storeName") @SerializedName("source") val storeName: String,
-    @ColumnInfo(name = "price") @SerializedName("price") val price: Double
+    @ColumnInfo(name = "itemName") val itemName: String,
+    @ColumnInfo(name = "itemLink") val itemLink: String,
+    @ColumnInfo(name = "storeNameOne") val storeNameOne: String,
+    @ColumnInfo(name = "storePriceOne") val storePriceOne: Double,
+    @ColumnInfo(name = "storeNameTwo")  val storeNameTwo: String,
+    @ColumnInfo(name = "storePriceTwo") val storePriceTwo: Double
 //    @ColumnInfo("thumbnail") @SerializedName("thumbnail") val thumbnail: String
 )

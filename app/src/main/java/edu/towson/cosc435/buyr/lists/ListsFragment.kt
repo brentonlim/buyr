@@ -34,9 +34,9 @@ class ListsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        addListBtn.setOnClickListener {
-//            listController.launchAddListScreen()
-//        }
+        addNewListBtn.setOnClickListener {
+            listController.launchAddListScreen()
+        }
 
         val adapter = ListAdapter(listController)
         recyclerView.adapter = adapter

@@ -16,11 +16,12 @@ class ListDatabaseRepository(ctx: Context) : IListRepository {
         ListDatabase::class.java,
         "lists.db"
     ).build()
+
     companion object {
         val mutex = Mutex()
     }
 
-    override fun getCount(): Int {
+    override fun getListCount(): Int {
         Log.d("ListsAdapter", "SIZE: ${lists.size}")
         return lists.size
     }
@@ -30,7 +31,7 @@ class ListDatabaseRepository(ctx: Context) : IListRepository {
     }
 
     override suspend fun getLists(): kotlin.collections.List<List> {
-        if (getCount() == 0) {
+        if (getListCount() == 0) {
             clearAndFillLists()
         }
         return lists
@@ -61,7 +62,7 @@ class ListDatabaseRepository(ctx: Context) : IListRepository {
         }
     }
 
-    override suspend fun refreshList() {
+    override suspend fun refreshLists() {
         clearAndFillLists()
     }
 }

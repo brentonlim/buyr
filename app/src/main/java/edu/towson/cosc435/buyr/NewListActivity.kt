@@ -15,7 +15,7 @@ class NewListActivity : AppCompatActivity() {
         if(list == null) return
         inputListName.editableText.append(list.listName)
         inputListDesc.editableText.append(list.listDescription)
-        saveListBtn.text = resources.getString(R.string.edit_list_btn_text)
+        addItemBtn.text = resources.getString(R.string.edit_list_btn_text)
     }
 
     companion object {
