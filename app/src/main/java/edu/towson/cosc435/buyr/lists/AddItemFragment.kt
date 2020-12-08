@@ -29,7 +29,7 @@ class AddItemFragment : Fragment() {
         super.onAttach(context)
         when(context) {
             is IListController -> listController = context
-            else -> throw Exception("Context expected to implement IItemController")
+            else -> throw Exception("Context expected to implement IListController")
         }
     }
 

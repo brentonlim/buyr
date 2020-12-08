@@ -60,4 +60,9 @@ class ListAdapter(private val controller: IListController): RecyclerView.Adapter
         holder.listDescriptionTv.text = list.listDescription
         holder.listDateTv.text = list.creationDate.toString()
     }
+
+    suspend fun deleteOnSwipe(position: Int) {
+        controller.deleteList(position)
+        notifyDataSetChanged()
+    }
 }
